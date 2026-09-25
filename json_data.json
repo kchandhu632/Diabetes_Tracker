@@ -1,0 +1,252 @@
+{
+  "characters": 2715,
+  "diagnoses": [],
+  "exercise": [
+    {
+      "duration": 30,
+      "frequency": null,
+      "intensity": "Brisk",
+      "notes": " Aerobic Exercise: 30 minutes of brisk walking, 5 days a week (Total 150 minutes/week).",
+      "source": "Uploaded PDF",
+      "time": null,
+      "type": "Brisk walking (aerobic)",
+      "unit": "minutes"
+    },
+    {
+      "duration": 10,
+      "frequency": null,
+      "intensity": "Light",
+      "notes": " Post-Meal Walk: A light 10-minute stroll after lunch and dinner significantly blunt glucose spikes.",
+      "source": "Uploaded PDF",
+      "time": null,
+      "type": "Post-lunch walk",
+      "unit": "minutes"
+    },
+    {
+      "duration": null,
+      "frequency": "twice weekly",
+      "intensity": "Lightweight",
+      "notes": " Strength Training: Lightweight body exercises (squats or wall push-ups) twice weekly to boost cellular insulin",
+      "source": "Uploaded PDF",
+      "time": null,
+      "type": "Strength training",
+      "unit": "minutes"
+    }
+  ],
+  "extraction": {
+    "exercise_entries": 3,
+    "glucose_entries": 2,
+    "lab_entries": 0,
+    "meal_entries": 5,
+    "medication_entries": 3,
+    "success": true,
+    "warnings": []
+  },
+  "findings": [
+    "Normal: < 100",
+    "HIGH",
+    "Normal: < 140",
+    "Normal: < 5.7%",
+    "POOR CONTROL",
+    "To counteract hyperglycemia, a low-glycemic, fiber-rich nutritional regimen is advised",
+    "vegetables/dal + 1 cup low-fat curd + fresh cucumber & carrot salad.",
+    "Glucose entries extracted: 2",
+    "Meal entries extracted: 5",
+    "Exercise entries extracted: 3",
+    "Medication entries extracted: 3",
+    "Other lab entries extracted: 0"
+  ],
+  "glucose": [
+    {
+      "source": "Uploaded PDF",
+      "status": null,
+      "test": "Fasting Blood Sugar",
+      "time": "08:00:00",
+      "unit": "mg/dL",
+      "value": 156
+    },
+    {
+      "source": "Uploaded PDF",
+      "status": null,
+      "test": "Post-Prandial Blood Sugar",
+      "time": "11:00:00",
+      "unit": "mg/dL",
+      "value": 240
+    }
+  ],
+  "hba1c": {
+    "source": "Uploaded PDF",
+    "status": null,
+    "unit": "%",
+    "value": 8.2
+  },
+  "lab_results": [],
+  "meals": [
+    {
+      "calories": null,
+      "name": "Early Morning",
+      "notes": "1 glass of fenugreek-infused water or sugar-free green tea + 5 soaked almonds.",
+      "source": "Uploaded PDF",
+      "time": "06:00:00"
+    },
+    {
+      "calories": 350,
+      "name": "Breakfast",
+      "notes": "2 Millet Idlis or Jowar Rotis served with mint chutney + 1 boiled egg white.",
+      "source": "Uploaded PDF",
+      "time": "08:30:00"
+    },
+    {
+      "calories": 500,
+      "name": "Lunch",
+      "notes": "1 small bowl of brown rice or Foxtail Millet rice + 1 large bowl of leafy green",
+      "source": "Uploaded PDF",
+      "time": "13:00:00"
+    },
+    {
+      "calories": 150,
+      "name": "Evening Snack",
+      "notes": "1 cup roasted chana or boiled sprouts + sugar-free tea.",
+      "source": "Uploaded PDF",
+      "time": "17:00:00"
+    },
+    {
+      "calories": 450,
+      "name": "Dinner",
+      "notes": "2 whole-wheat pulkas + 1 cup mixed vegetable curry or grilled lean protein",
+      "source": "Uploaded PDF",
+      "time": "20:00:00"
+    }
+  ],
+  "medications": [
+    {
+      "dose": "500 mg",
+      "frequency": null,
+      "instructions": "Metformin Hydrochloride (SR) - 500mg: 1 tablet after dinner. Acts by suppressing hepatic glucose",
+      "name": "Metformin Hydrochloride (SR)",
+      "source": "Uploaded PDF",
+      "time": null
+    },
+    {
+      "dose": "1 mg",
+      "frequency": null,
+      "instructions": "Glimepiride - 1mg: 1 tablet before breakfast. Stimulates beta cells of the pancreas to release insulin.",
+      "name": "Glimepiride",
+      "source": "Uploaded PDF",
+      "time": null
+    },
+    {
+      "dose": "0.2 mg",
+      "frequency": null,
+      "instructions": "Voglibose - 0.2mg: 1 tablet just before lunch. Delays carbohydrate absorption to reduce post-meal spikes.",
+      "name": "Voglibose",
+      "source": "Uploaded PDF",
+      "time": null
+    }
+  ],
+  "patient": {
+    "age": 52,
+    "gender": "Male",
+    "name": "Mr. Ramesh Kumar",
+    "patient_id": "SCR-2026-8842"
+  },
+  "preview": "SOUTH COAST RAILWAYS (MEDICAL\n DEPARTMENT)\n Divisional Railway Hospital | Quality Health Services for Railway Employees\nPatient Name: Mr. Ramesh Kumar\nPatient ID: SCR-2026-8842\nAge / Gender: 52 Years / Male\nSample Collected: 10-Sep-2026, 08:00 AM\nReferred By: Chief Medical Director\nReport Date: 11-Sep-2026, 11:00 AM\n1. Blood Glucose Test Results\n Test Name\n Result\n Unit\n Reference Range\n Status\nFasting Blood Sugar (FBS)\n156\nmg/dL\nNormal: < 100\nPre-Diabetes: 100-125\nDiabetes: ≥ 126\nHIGH\nPost-Prandial Blood Sugar\n(PPBS)\n240\nmg/dL\nNormal: < 140\nPre-Diabetes: 140-199\nDiabetes: ≥ 200\nHIGH\nHbA1c (Glycated Hemoglobin)\n8.2\n%\nNormal: < 5.7%\nPre-Diabetes: 5.7%-6.4%\nDiabetes: ≥ 6.5%\nPOOR CONTROL\n2. Prescribed Medications & Clinical Plan\nBased on the clinical findings (HbA1c: 8.2%, PPBS: 240 mg/dL), the patient requires a structured\npharmacological intervention to enhance insulin sensitivity and manage post-meal spikes:\n Metformin Hydrochloride (SR) - 500mg: 1 tablet after dinner. Acts by suppressing hepatic glucose\nproduction.\n Glimepiride - 1mg: 1 tablet before breakfast. Stimulates beta cells of the pancreas to release insulin.\n Voglibose - 0.2mg: 1 tablet just before lunch. Delays carbohydrate absorption to reduce post-meal spikes.\n3. 1500-Calorie Structured Diet Plan\nTo counteract hyperglycemia, a low-glycemic, fiber-rich nutritional regimen is advised:\n Early Morning (06:00 AM): 1 glass of fenugreek-infused water or sugar-free green tea + 5 soaked almonds.\n Breakfast (08:30 AM - ~350 kcal): 2 Millet Idlis or Jowar Rotis served with mint chutney + 1 boiled egg white.\n Lunch (01:00 PM - ~500 kcal): 1 small bowl of brown rice or Foxtail Millet rice + 1 large bowl of leafy green\nvegetables/dal + 1 cup low-fat curd + fresh cucumber & carrot salad.\n Evening Snack (05:00 PM - ~150 kcal): 1 cup roasted chana or boiled sprouts + sugar-free tea.\n Dinner (08:00 PM - ~450 kcal): 2 whole-wheat pulkas + 1 cup mixed vegetable curry or grilled lean protein\n(chicken/fish).\n\n4. Physical Exercise & Management Protocol\nPhysical activity helps muscles utilize blood glucose directly, bypassing insulin resistance:\n Aerobic Exercise: 30 minutes of brisk walking, 5 days a week (Total 150 minutes/week).\n Post-Meal Walk: A light 10-minute stroll after lunch and dinner significantly blunt glucose spikes.\n Strength Training: Lightweight body exercises (squats or wall push-ups) twice weekly to boost cellular insulin\nresponsiveness.\nAuthorized Lab Signatory\nDr. K. Pranav, MD\nConsultant Pathologist\nAttending Endocrinologist\nDr. A. Srinivas, MD\nReg No: SCR-98745\n This is for informational purposes only. For medical advice or diagnosis, consult a professional. AI responses may include mistakes.\n",
+  "raw_sections": [
+    {
+      "content": "",
+      "section": "SOUTH COAST RAILWAYS (MEDICAL"
+    },
+    {
+      "content": "",
+      "section": "DEPARTMENT)"
+    },
+    {
+      "content": "",
+      "section": "1. Blood Glucose Test Results"
+    },
+    {
+      "content": "",
+      "section": "Test Name"
+    },
+    {
+      "content": "",
+      "section": "Result"
+    },
+    {
+      "content": "",
+      "section": "Unit"
+    },
+    {
+      "content": "",
+      "section": "Reference Range"
+    },
+    {
+      "content": "",
+      "section": "Status"
+    },
+    {
+      "content": "",
+      "section": "Fasting Blood Sugar (FBS)"
+    },
+    {
+      "content": "",
+      "section": "HIGH"
+    },
+    {
+      "content": "",
+      "section": "Post-Prandial Blood Sugar"
+    },
+    {
+      "content": "",
+      "section": "HIGH"
+    },
+    {
+      "content": "",
+      "section": "POOR CONTROL"
+    },
+    {
+      "content": "",
+      "section": "2. Prescribed Medications & Clinical Plan"
+    },
+    {
+      "content": "",
+      "section": "4. Physical Exercise & Management Protocol"
+    },
+    {
+      "content": "",
+      "section": "Authorized Lab Signatory"
+    },
+    {
+      "content": "",
+      "section": "Consultant Pathologist"
+    },
+    {
+      "content": "",
+      "section": "Attending Endocrinologist"
+    }
+  ],
+  "recommendations": [
+    "Based on the clinical findings (HbA1c: 8.2%, PPBS: 240 mg/dL), the patient requires a structured",
+    "pharmacological intervention to enhance insulin sensitivity and manage post-meal spikes",
+    " Metformin Hydrochloride (SR) - 500mg: 1 tablet after dinner. Acts by suppressing hepatic glucose",
+    "production.",
+    " Glimepiride - 1mg: 1 tablet before breakfast. Stimulates beta cells of the pancreas to release insulin.",
+    " Voglibose - 0.2mg: 1 tablet just before lunch. Delays carbohydrate absorption to reduce post-meal spikes.",
+    "To counteract hyperglycemia, a low-glycemic, fiber-rich nutritional regimen is advised",
+    " Early Morning (06:00 AM): 1 glass of fenugreek-infused water or sugar-free green tea + 5 soaked almonds.",
+    " Breakfast (08:30 AM - ~350 kcal): 2 Millet Idlis or Jowar Rotis served with mint chutney + 1 boiled egg white.",
+    " Lunch (01:00 PM - ~500 kcal): 1 small bowl of brown rice or Foxtail Millet rice + 1 large bowl of leafy green",
+    "vegetables/dal + 1 cup low-fat curd + fresh cucumber & carrot salad.",
+    " Evening Snack (05:00 PM - ~150 kcal): 1 cup roasted chana or boiled sprouts + sugar-free tea.",
+    " Dinner (08:00 PM - ~450 kcal): 2 whole-wheat pulkas + 1 cup mixed vegetable curry or grilled lean protein",
+    "(chicken/fish)."
+  ],
+  "report": {
+    "filename": "ramesh_comprehensive_diabetic_report.pdf",
+    "pages": 2,
+    "report_date": "2026-09-11T11:00:00",
+    "sample_date": "2026-09-10T08:00:00",
+    "source": "Uploaded PDF"
+  },
+  "report_date": "2026-09-11T11:00:00"
+}

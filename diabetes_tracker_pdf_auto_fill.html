@@ -1,0 +1,3287 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Diabetes Tracker
+</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* ==============================
+       MAIN MEDICAL BACKGROUND
+    ============================== */
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+        background:
+            linear-gradient(
+                rgba(10, 30, 60, 0.72),
+                rgba(30, 20, 70, 0.78)
+            ),
+            url("https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1920&q=85");
+
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+
+        min-height: 100vh;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        padding: 30px;
+    }
+
+    /* ==============================
+       MAIN CONTAINER
+    ============================== */
+
+    .container {
+        background: rgba(255, 255, 255, 0.96);
+
+        border-radius: 18px;
+
+        box-shadow:
+            0 20px 60px rgba(0, 0, 0, 0.35);
+
+        max-width: 1200px;
+        width: 95%;
+
+        overflow: hidden;
+
+        backdrop-filter: blur(10px);
+    }
+
+    /* ==============================
+       AUTH PAGES
+    ============================== */
+
+    .auth-container {
+        padding: 45px;
+        max-width: 430px;
+        margin: auto;
+    }
+
+    .auth-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .medical-icon {
+        width: 75px;
+        height: 75px;
+
+        margin: 0 auto 15px;
+
+        border-radius: 50%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        font-size: 38px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #667eea,
+                #764ba2
+            );
+
+        color: white;
+
+        box-shadow:
+            0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .auth-header h1 {
+        color: #4b55a1;
+        font-size: 27px;
+        margin-bottom: 10px;
+        line-height: 1.3;
+    }
+
+    .project-title {
+        font-size: 13px;
+        color: #777;
+        margin-top: 8px;
+        line-height: 1.5;
+    }
+
+    .auth-header p {
+        color: #666;
+        font-size: 14px;
+    }
+
+    /* ==============================
+       FORM
+    ============================== */
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #333;
+        font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        padding: 13px;
+
+        border: 2px solid #e2e5f0;
+
+        border-radius: 8px;
+
+        font-size: 14px;
+
+        background: #fafbff;
+
+        transition: 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+        outline: none;
+
+        border-color: #667eea;
+
+        background: white;
+
+        box-shadow:
+            0 0 0 3px rgba(102, 126, 234, 0.12);
+    }
+
+    /* ==============================
+       BUTTONS
+    ============================== */
+
+    .btn {
+        width: 100%;
+        padding: 13px;
+
+        border: none;
+
+        border-radius: 8px;
+
+        font-size: 16px;
+
+        font-weight: 600;
+
+        cursor: pointer;
+
+        transition: all 0.3s;
+    }
+
+    .btn-primary {
+        background:
+            linear-gradient(
+                135deg,
+                #667eea 0%,
+                #764ba2 100%
+            );
+
+        color: white;
+
+        box-shadow:
+            0 6px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 10px 25px rgba(102, 126, 234, 0.45);
+    }
+
+    /* ==============================
+       AUTH TOGGLE
+    ============================== */
+
+    .toggle-auth {
+        text-align: center;
+        margin-top: 22px;
+        color: #666;
+        font-size: 14px;
+    }
+
+    .toggle-auth a {
+        color: #667eea;
+        cursor: pointer;
+        font-weight: 700;
+    }
+
+    .toggle-auth a:hover {
+        color: #764ba2;
+    }
+
+    /* ==============================
+       MESSAGES
+    ============================== */
+
+    .error {
+        color: #dc3545;
+        font-size: 12px;
+        margin-top: 8px;
+    }
+
+    .success {
+        color: #28a745;
+        font-size: 12px;
+        margin-top: 8px;
+    }
+
+    /* ==============================
+       DASHBOARD
+    ============================== */
+
+    .dashboard {
+        display: none;
+        position: relative;
+        width: min(100%, 100vw);
+        min-height: 100vh;
+        padding: 30px 30px 40px;
+        margin: 0;
+        border-radius: 0;
+        overflow: hidden;
+
+        background:
+            linear-gradient(
+                rgba(28, 49, 72, 0.66),
+                rgba(20, 30, 52, 0.75)
+            ),
+            url("https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1600&q=85");
+
+        background-size: cover;
+        background-position: center;
+        box-shadow: none;
+        border: none;
+    }
+
+    .dashboard:not(.hide) {
+        display: block;
+    }
+
+    .dashboard::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(16, 24, 38, 0.12);
+    }
+
+    .dashboard > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 28px;
+        padding: 18px 22px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 16px;
+        background: rgba(11, 27, 43, 0.30);
+        backdrop-filter: blur(8px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+    }
+
+    .dashboard-header h1 {
+        color: #f4f8ff;
+        font-size: 24px;
+        font-weight: 700;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #87d4ff, #5d7cf6);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        box-shadow: 0 6px 18px rgba(93, 124, 246, 0.5);
+    }
+
+    .logout-btn {
+        background: rgba(255, 255, 255, 0.12);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        padding: 9px 17px;
+        border-radius: 9px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: 0.2s ease;
+    }
+
+    .logout-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* ==============================
+       STATISTICS
+    ============================== */
+
+    .stats-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 18px;
+        margin-bottom: 30px;
+    }
+
+    .stat-box {
+        background: rgba(9, 23, 38, 0.40);
+        color: white;
+        padding: 24px 20px;
+        border-radius: 14px;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 12px 26px rgba(0, 0, 0, 0.18);
+    }
+
+    .stat-box .value {
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .stat-box .label {
+        font-size: 14px;
+        opacity: 0.9;
+    }
+
+    .report-panel {
+        margin-bottom: 30px;
+        padding: 22px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 14px;
+        background: rgba(12, 23, 35, 0.48);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+        backdrop-filter: blur(8px);
+    }
+
+    .report-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 16px;
+    }
+
+    .report-header h2 {
+        color: #eff6ff;
+        font-size: 19px;
+    }
+
+    .report-header p,
+    .report-note,
+    .report-empty {
+        color: rgba(239, 246, 255, 0.78);
+        font-size: 13px;
+    }
+
+    .report-controls {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 18px;
+    }
+
+    .report-controls input,
+    .report-controls button {
+        min-height: 40px;
+        padding: 9px 12px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 7px;
+        font-size: 13px;
+    }
+
+    .report-controls input {
+        color: #172333;
+        background: #f8fbff;
+    }
+
+    .report-controls button {
+        color: white;
+        background: #3478c5;
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+    .report-controls button:hover {
+        background: #28629f;
+    }
+
+    .report-upload {
+        padding-top: 16px;
+        margin-top: 16px;
+        border-top: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .report-upload label {
+        display: block;
+        margin-bottom: 8px;
+        color: #eff6ff;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .report-upload input {
+        max-width: 360px;
+        color: #dcecff;
+    }
+
+    .report-document {
+        margin-top: 16px;
+        padding: 14px;
+        border-left: 3px solid #6eb5ff;
+        background: rgba(255, 255, 255, 0.07);
+    }
+
+    .report-document h3 {
+        margin-bottom: 8px;
+        color: white;
+        font-size: 15px;
+    }
+
+    .report-document pre {
+        max-height: 180px;
+        margin-top: 12px;
+        overflow: auto;
+        white-space: pre-wrap;
+        color: rgba(239, 246, 255, 0.78);
+        font: inherit;
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    .report-summary {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
+        margin-bottom: 16px;
+    }
+
+    .report-metric {
+        padding: 13px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .report-metric strong {
+        display: block;
+        color: white;
+        font-size: 18px;
+        margin-bottom: 4px;
+    }
+
+    .report-metric span {
+        color: rgba(239, 246, 255, 0.74);
+        font-size: 12px;
+    }
+
+    .report-findings {
+        margin: 0;
+        padding-left: 18px;
+        color: #edf5ff;
+        font-size: 13px;
+        line-height: 1.7;
+    }
+
+    /* ==============================
+       DASHBOARD CARDS
+    ============================== */
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 22px;
+        margin-bottom: 30px;
+    }
+
+    .card {
+        background: rgba(12, 23, 35, 0.45);
+        border-radius: 14px;
+        padding: 20px 18px 18px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-left: 4px solid rgba(110, 181, 255, 0.95);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+        backdrop-filter: blur(8px);
+    }
+
+    .card h3 {
+        color: #eff6ff;
+        margin-bottom: 15px;
+        font-size: 16px;
+    }
+
+    /* ==============================
+       INLINE FORMS
+    ============================== */
+
+    .form-inline {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .form-inline input,
+    .form-inline select {
+        flex: 1;
+
+        min-width: 120px;
+
+        padding: 10px;
+
+        border: 2px solid #e0e0e0;
+
+        border-radius: 6px;
+
+        font-size: 14px;
+    }
+
+    .form-inline input:focus {
+        outline: none;
+        border-color: #667eea;
+    }
+
+    .form-inline button {
+        padding: 10px 20px;
+
+        background: #667eea;
+
+        color: white;
+
+        border: none;
+
+        border-radius: 6px;
+
+        cursor: pointer;
+
+        font-weight: 600;
+    }
+
+    .form-inline button:hover {
+        background: #764ba2;
+    }
+
+    /* ==============================
+       TABLE
+    ============================== */
+
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        color: #edf5ff;
+    }
+
+    .data-table thead {
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        font-size: 14px;
+    }
+
+    .data-table th {
+        font-weight: 600;
+        color: #f3f8ff;
+    }
+
+    .data-table tr:hover {
+        background: rgba(255, 255, 255, 0.04);
+    }
+
+    /* ==============================
+       DELETE BUTTON
+    ============================== */
+
+    .delete-btn {
+        background: #dc3545;
+
+        color: white;
+
+        border: none;
+
+        padding: 5px 10px;
+
+        border-radius: 4px;
+
+        cursor: pointer;
+
+        font-size: 12px;
+    }
+
+    .delete-btn:hover {
+        background: #c82333;
+    }
+
+    /* ==============================
+       LOCK OVERLAY
+    ============================== */
+
+    .lock-overlay {
+        display: none;
+
+        position: fixed;
+
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        background:
+            rgba(5, 15, 35, 0.82);
+
+        z-index: 9999;
+
+        justify-content: center;
+        align-items: center;
+    }
+
+    .lock-modal {
+        background: white;
+
+        padding: 40px;
+
+        border-radius: 15px;
+
+        text-align: center;
+
+        max-width: 400px;
+
+        width: 90%;
+
+        box-shadow:
+            0 20px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .lock-modal h2 {
+        color: #dc3545;
+        margin-bottom: 15px;
+    }
+
+    .lock-modal p {
+        color: #666;
+        margin-bottom: 20px;
+    }
+
+    .lock-modal input {
+        width: 100%;
+
+        padding: 12px;
+
+        border: 2px solid #e0e0e0;
+
+        border-radius: 6px;
+
+        font-size: 16px;
+
+        margin-bottom: 15px;
+    }
+
+    .lock-modal button {
+        width: 100%;
+
+        padding: 12px;
+
+        background: #667eea;
+
+        color: white;
+
+        border: none;
+
+        border-radius: 6px;
+
+        cursor: pointer;
+
+        font-weight: 600;
+    }
+
+    /* ==============================
+       ACTIVITY TIMER
+    ============================== */
+
+    .activity-timer {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.84);
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        padding: 12px 18px;
+        border-radius: 12px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+        font-size: 12px;
+        color: #1a2b3a;
+        z-index: 1000;
+        font-weight: 600;
+    }
+
+    .activity-timer.warning {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .hide {
+        display: none !important;
+    }
+
+    /* ==============================
+       RESPONSIVE
+    ============================== */
+
+    @media (max-width: 768px) {
+
+        body {
+            padding: 15px;
+        }
+
+        .auth-container {
+            padding: 30px 20px;
+        }
+
+        .dashboard {
+            padding: 20px;
+        }
+
+        .grid {
+            grid-template-columns: 1fr;
+        }
+
+        .form-inline {
+            flex-direction: column;
+        }
+
+        .form-inline input,
+        .form-inline select,
+        .form-inline button {
+            width: 100%;
+        }
+
+        .dashboard-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .data-table {
+            font-size: 12px;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 8px;
+        }
+    }
+
+</style>
+
+
+<style>
+/* Manual entry is disabled: dashboard records come from the uploaded PDF. */
+.grid .card .form-inline {
+    display: none !important;
+}
+.grid .card {
+    min-height: 220px;
+}
+</style>
+
+</head>
+
+<body>
+<!-- ==============================
+     LOGIN PAGE
+============================== -->
+
+<div id="loginPage" class="container">
+
+    <div class="auth-container">
+
+        <div class="auth-header">
+
+            <div class="medical-icon">
+                🩺
+            </div>
+
+            <h1>South Coast Railways </h1>
+
+            <p>
+                Smart Diabetes Monitoring & Auto-Locking System
+            </p>
+
+            <div class="project-title">
+                Investigation In Diabetic And Auto Locking System
+            </div>
+
+        </div>
+
+        <form id="loginForm">
+
+            <div class="form-group">
+
+                <label>Username / Email</label>
+
+                <input
+                    type="text"
+                    id="loginUsername"
+                    placeholder="Enter username or email"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Enter password"
+                    required
+                >
+
+            </div>
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+                🔐 Sign In
+            </button>
+
+            <div
+                id="loginError"
+                class="error hide"
+            ></div>
+
+        </form>
+
+        <div class="toggle-auth">
+
+            Don't have an account?
+
+            <a onclick="toggleAuth()">
+                Sign Up
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ==============================
+     SIGNUP PAGE
+============================== -->
+
+<div
+    id="signupPage"
+    class="container hide"
+>
+
+    <div class="auth-container">
+
+        <div class="auth-header">
+
+            <div class="medical-icon">
+                ❤️
+            </div>
+
+            <h1>Create Account</h1>
+
+            <p>
+                Create your secure health account
+            </p>
+
+        </div>
+
+        <form id="signupForm">
+
+            <div class="form-group">
+
+                <label>Full Name</label>
+
+                <input
+                    type="text"
+                    id="signupName"
+                    placeholder="Enter full name"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Email</label>
+
+                <input
+                    type="email"
+                    id="signupEmail"
+                    placeholder="Enter email"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Username</label>
+
+                <input
+                    type="text"
+                    id="signupUsername"
+                    placeholder="Create username"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Age</label>
+
+                <input
+                    type="number"
+                    id="signupAge"
+                    placeholder="Enter age"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    id="signupPassword"
+                    placeholder="Create password"
+                    required
+                >
+
+            </div>
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+                🛡️ Create Secure Account
+            </button>
+
+            <div
+                id="signupError"
+                class="error hide"
+            ></div>
+
+            <div
+                id="signupSuccess"
+                class="success hide"
+            ></div>
+
+        </form>
+
+        <div class="toggle-auth">
+
+            Already have an account?
+
+            <a onclick="toggleAuth()">
+                Sign In
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ==============================
+     DASHBOARD PAGE
+============================== -->
+
+<div
+    id="dashboardPage"
+    class="dashboard container hide"
+>
+
+    <div class="dashboard-header">
+
+        <h1>
+            Welcome,
+            <span id="userName">
+                User
+            </span>!
+        </h1>
+
+        <div class="user-info">
+
+            <div
+                class="avatar"
+                id="userAvatar"
+            >
+                U
+            </div>
+
+            <button
+                class="logout-btn"
+                onclick="startOver()"
+                title="Clear this user's report data"
+            >
+                Start Over
+            </button>
+
+            <button
+                class="logout-btn"
+                onclick="logout()"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- STATISTICS -->
+
+    <div class="stats-container">
+
+        <div class="stat-box">
+
+            <div
+                class="value"
+                id="avgGlucose"
+            >
+                --
+            </div>
+
+            <div class="label">
+                Avg Glucose (mg/dL)
+            </div>
+
+        </div>
+
+
+        <div class="stat-box">
+
+            <div
+                class="value"
+                id="totalMeals"
+            >
+                0
+            </div>
+
+            <div class="label">
+                Meals Logged
+            </div>
+
+        </div>
+
+
+        <div class="stat-box">
+
+            <div
+                class="value"
+                id="totalExercise"
+            >
+                0
+            </div>
+
+            <div class="label">
+                Exercise Sessions
+            </div>
+
+        </div>
+
+
+        <div class="stat-box">
+
+            <div
+                class="value"
+                id="totalMeds"
+            >
+                0
+            </div>
+
+            <div class="label">
+                Medications Taken
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- TRACKING CARDS -->
+
+    <section class="report-panel" aria-labelledby="reportTitle">
+
+        <div class="report-header">
+            <div>
+                <h2 id="reportTitle">Health Report Analyzer</h2>
+                <p>Review patterns in your logged records.</p>
+            </div>
+        </div>
+
+        <div class="report-controls">
+            <input type="date" id="reportStartDate" aria-label="Report start date">
+            <input type="date" id="reportEndDate" aria-label="Report end date">
+            <button type="button" onclick="analyzeReport()">Analyze Report</button>
+        </div>
+
+        <div class="report-upload">
+            <label for="reportFile">Analyze an uploaded PDF document</label>
+            <div class="report-controls">
+                <input type="file" id="reportFile" accept="application/pdf,.pdf">
+                <button type="button" onclick="analyzeUploadedReport()">Upload and Analyze PDF</button>
+            </div>
+            <p id="uploadStatus" class="report-note"></p>
+            <p class="report-note">Upload a patient PDF to automatically populate glucose, meals, exercise, and medication records. Manual entry is not required.</p>
+        </div>
+
+        <div id="reportOutput">
+            <p class="report-empty">Choose a date range or analyze all available records.</p>
+        </div>
+
+        <p class="report-note">This summary is for tracking only and does not replace advice from a healthcare professional.</p>
+
+    </section>
+
+    <div class="grid">
+
+        <!-- GLUCOSE -->
+
+        <div class="card">
+
+            <h3>
+                📊 Blood Glucose Reading
+            </h3>
+
+            <div class="form-inline">
+
+                <input
+                    type="number"
+                    id="glucoseValue"
+                    placeholder="mg/dL"
+                    min="0"
+                    max="500"
+                >
+
+                <input
+                    type="datetime-local"
+                    id="glucoseTime"
+                >
+
+                <button onclick="addGlucose()">
+                    Record
+                </button>
+
+            </div>
+
+            <table class="data-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Date,Time</th>
+
+                        <th>
+                            Value (mg/dL)
+                        </th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="glucoseTable"></tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- MEALS -->
+
+        <div class="card">
+
+            <h3>
+                🍽️ Meals
+            </h3>
+
+            <div class="form-inline">
+
+                <input
+                    type="text"
+                    id="mealName"
+                    placeholder="Meal name"
+                >
+
+                <input
+                    type="number"
+                    id="mealCalories"
+                    placeholder="Calories"
+                >
+
+                <input
+                    type="datetime-local"
+                    id="mealTime"
+                >
+
+                <button onclick="addMeal()">
+                    Add
+                </button>
+
+            </div>
+
+            <table class="data-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Date,Time</th>
+
+                        <th>Meal</th>
+
+                        <th>Calories</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="mealsTable"></tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- EXERCISE -->
+
+        <div class="card">
+
+            <h3>
+                🏃 Exercise
+            </h3>
+
+            <div class="form-inline">
+
+                <input
+                    type="text"
+                    id="exerciseType"
+                    placeholder="Type (e.g., Running)"
+                >
+
+                <input
+                    type="number"
+                    id="exerciseDuration"
+                    placeholder="Minutes"
+                >
+
+                <input
+                    type="datetime-local"
+                    id="exerciseTime"
+                >
+
+                <button onclick="addExercise()">
+                    Log
+                </button>
+
+            </div>
+
+            <table class="data-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Date,Time</th>
+
+                        <th>Type</th>
+
+                        <th>
+                            Duration (min)
+                        </th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="exerciseTable"></tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- MEDICATION -->
+
+        <div class="card">
+
+            <h3>
+                💊 Medications
+            </h3>
+
+            <div class="form-inline">
+
+                <input
+                    type="text"
+                    id="medName"
+                    placeholder="Medication name"
+                >
+
+                <input
+                    type="number"
+                    id="medDose"
+                    placeholder="Dose (mg)"
+                >
+
+                <input
+                    type="datetime-local"
+                    id="medTime"
+                >
+
+                <button onclick="addMedication()">
+                    Take
+                </button>
+
+            </div>
+
+            <table class="data-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Date,Time</th>
+
+                        <th>Medication</th>
+
+                        <th>Dose (mg)</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="medicationsTable"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ==============================
+     AUTO LOCK
+============================== -->
+
+<div
+    id="lockOverlay"
+    class="lock-overlay"
+>
+
+    <div class="lock-modal">
+
+        <h2>
+            🔒 Session Locked
+        </h2>
+
+        <p>
+            Your session has been locked due to
+            inactivity. Enter your password to continue.
+        </p>
+
+        <input
+            type="password"
+            id="unlockPassword"
+            placeholder="Enter password"
+        >
+
+        <button onclick="unlockSession()">
+            🔓 Unlock Session
+        </button>
+
+        <div
+            id="unlockError"
+            class="error hide"
+            style="margin-top: 15px;"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<!-- ACTIVITY TIMER -->
+
+<div
+    class="activity-timer"
+    id="activityTimer"
+></div>
+
+
+<script>
+
+    // The HTML server runs on port 8000, while Flask runs on port 5000.
+    // Always send API requests to the Flask backend.
+    const API_URL = 'http://127.0.0.1:5000/api';
+
+    function authHeaders() {
+
+        const token = localStorage.getItem('token');
+
+        return token
+            ? { Authorization: `Bearer ${token}` }
+            : {};
+
+    }
+
+    async function apiRequest(url, options = {}) {
+
+        const headers = {
+            ...authHeaders(),
+            ...(options.headers || {})
+        };
+
+        return fetch(url, {
+            ...options,
+            headers
+        });
+
+    }
+
+    let currentUser = null;
+
+    // IMPORTANT: report data is user-specific. localStorage itself is shared
+    // by every account in the same browser, so every patient's data gets a
+    // separate key based on the signed-in username.
+    const USER_DATA_KEYS = [
+        'latestReportData',
+        'glucose',
+        'meals',
+        'exercise',
+        'medications'
+    ];
+
+    function userStorageKey(key) {
+        const username = currentUser?.username;
+        if (!username) return null;
+        return `diabetesTracker:${encodeURIComponent(username)}:${key}`;
+    }
+
+    function getUserStorage(key, fallback = null) {
+        const scopedKey = userStorageKey(key);
+        if (!scopedKey) return fallback;
+        return localStorage.getItem(scopedKey) ?? fallback;
+    }
+
+    function setUserStorage(key, value) {
+        const scopedKey = userStorageKey(key);
+        if (scopedKey) localStorage.setItem(scopedKey, value);
+    }
+
+    function removeUserStorage(key) {
+        const scopedKey = userStorageKey(key);
+        if (scopedKey) localStorage.removeItem(scopedKey);
+    }
+
+    function clearCurrentUserData() {
+        USER_DATA_KEYS.forEach(removeUserStorage);
+
+        // Remove the old global keys created by the previous version. This
+        // prevents a report from an earlier account/version from reappearing.
+        USER_DATA_KEYS.forEach((key) => localStorage.removeItem(key));
+    }
+
+    function clearDashboardUI() {
+        ['glucoseTable', 'mealsTable', 'exerciseTable', 'medicationsTable'].forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) el.innerHTML = '';
+        });
+        const reportOutput = document.getElementById('reportOutput');
+        if (reportOutput) {
+            reportOutput.innerHTML = '<p class="report-empty">No report has been uploaded for this account.</p>';
+        }
+        const fileInput = document.getElementById('reportFile');
+        if (fileInput) fileInput.value = '';
+        updateStats();
+    }
+
+    let inactivityTimeout = null;
+
+    let warningTimeout = null;
+
+    let activityCountdownInterval = null;
+
+    let activityDeadline = null;
+
+    let sessionLocked = false;
+
+    const AUTO_LOCK_MINUTES = 10;
+
+    const INACTIVITY_TIME =
+        AUTO_LOCK_MINUTES * 60 * 1000;
+
+    const WARNING_TIME =
+        8 * 60 * 1000;
+
+
+    /* ==============================
+       AUTH
+    ============================== */
+
+    function toggleAuth() {
+
+        document
+            .getElementById('loginPage')
+            .classList
+            .toggle('hide');
+
+        document
+            .getElementById('signupPage')
+            .classList
+            .toggle('hide');
+
+    }
+
+
+    document
+        .getElementById('loginForm')
+        .addEventListener(
+            'submit',
+            async (e) => {
+
+                e.preventDefault();
+
+                const username =
+                    document
+                    .getElementById(
+                        'loginUsername'
+                    ).value;
+
+                const password =
+                    document
+                    .getElementById(
+                        'loginPassword'
+                    ).value;
+
+                const loginErrorEl =
+                    document.getElementById('loginError');
+
+                loginErrorEl.classList.add('hide');
+
+                try {
+
+                    const response =
+                        await fetch(
+                            `${API_URL}/login`,
+                            {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type':
+                                        'application/json'
+                                },
+                                body:
+                                    JSON.stringify({
+                                        username,
+                                        password
+                                    })
+                            }
+                        );
+
+                    const data =
+                        await response.json();
+
+                    if (response.ok) {
+
+                        currentUser =
+                            data.user;
+
+                        localStorage.setItem(
+                            'token',
+                            data.token
+                        );
+
+                        // Never allow an unscoped/previous account report to
+                        // appear for the newly signed-in user.
+                        USER_DATA_KEYS.forEach((key) => localStorage.removeItem(key));
+
+                        showDashboard();
+
+                        resetActivityTimer();
+
+                    } else {
+
+                        showError(
+                            'loginError',
+                            data.message ||
+                            'Login failed'
+                        );
+
+                    }
+
+                } catch (error) {
+
+                    console.error('Login API failed:', error);
+
+                    showError(
+                        'loginError',
+                        'Unable to connect to the server. Make sure the app is running.'
+                    );
+
+                }
+
+            }
+        );
+
+
+    /* ==============================
+       SIGNUP
+    ============================== */
+
+    document
+        .getElementById('signupForm')
+        .addEventListener(
+            'submit',
+            async (e) => {
+
+                e.preventDefault();
+
+                const name =
+                    document
+                    .getElementById(
+                        'signupName'
+                    ).value;
+
+                const email =
+                    document
+                    .getElementById(
+                        'signupEmail'
+                    ).value;
+
+                const username =
+                    document
+                    .getElementById(
+                        'signupUsername'
+                    ).value;
+
+                const age =
+                    document
+                    .getElementById(
+                        'signupAge'
+                    ).value;
+
+                const password =
+                    document
+                    .getElementById(
+                        'signupPassword'
+                    ).value;
+
+                const signupErrorEl =
+                    document.getElementById('signupError');
+
+                const signupSuccessEl =
+                    document.getElementById('signupSuccess');
+
+                signupErrorEl.classList.add('hide');
+                signupSuccessEl.classList.add('hide');
+
+                try {
+
+                    const response =
+                        await fetch(
+                            `${API_URL}/register`,
+                            {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type':
+                                        'application/json'
+                                },
+                                body:
+                                    JSON.stringify({
+                                        name,
+                                        email,
+                                        username,
+                                        age,
+                                        password
+                                    })
+                            }
+                        );
+
+                    const data =
+                        await response.json();
+
+                    if (response.ok) {
+
+                        showSuccess(
+                            'signupSuccess',
+                            'Account created! Please login.'
+                        );
+
+                        setTimeout(
+                            () => toggleAuth(),
+                            1500
+                        );
+
+                    } else {
+
+                        showError(
+                            'signupError',
+                            data.message ||
+                            'Registration failed'
+                        );
+
+                    }
+
+                } catch (error) {
+
+                    console.error('Registration API failed:', error);
+
+                    showError(
+                        'signupError',
+                        'Unable to connect to the server. Make sure the app is running.'
+                    );
+
+                }
+
+            }
+        );
+
+
+    /* ==============================
+       DASHBOARD
+    ============================== */
+
+    function showDashboard() {
+
+        document
+            .getElementById('loginPage')
+            .classList.add('hide');
+
+        document
+            .getElementById('signupPage')
+            .classList.add('hide');
+
+        document
+            .getElementById('dashboardPage')
+            .classList
+            .remove('hide');
+
+        document
+            .getElementById('userName')
+            .textContent =
+                currentUser.name ||
+                currentUser.username;
+
+        document
+            .getElementById('userAvatar')
+            .textContent =
+                (
+                    currentUser.name ||
+                    currentUser.username
+                )[0]
+                .toUpperCase();
+
+        loadAllData();
+
+    }
+
+
+    function startOver() {
+        if (!currentUser) return;
+
+        const confirmed = confirm(
+            'Start Over will permanently clear the uploaded report and dashboard data for this account on this browser. Continue?'
+        );
+        if (!confirmed) return;
+
+        clearCurrentUserData();
+        clearDashboardUI();
+
+        const status = document.getElementById('uploadStatus');
+        if (status) {
+            status.textContent = 'Started over. Please upload a new report.';
+            status.style.color = '#a7f3d0';
+        }
+    }
+
+
+    function logout() {
+
+        localStorage.removeItem('token');
+
+        currentUser = null;
+        sessionLocked = false;
+
+        document
+            .getElementById('lockOverlay')
+            .style
+            .display = 'none';
+
+        document
+            .getElementById('dashboardPage')
+            .classList.add('hide');
+
+        document
+            .getElementById('loginPage')
+            .classList
+            .remove('hide');
+
+        document
+            .getElementById('loginForm')
+            .reset();
+
+        clearDashboardUI();
+        clearActivityTimer();
+
+    }
+
+
+    /* ==============================
+       DATA FUNCTIONS
+    ============================== */
+
+    async function addGlucose() {
+
+        const value =
+            document
+            .getElementById(
+                'glucoseValue'
+            ).value;
+
+        const time =
+            document
+            .getElementById(
+                'glucoseTime'
+            ).value;
+
+        if (!value) {
+
+            return alert(
+                'Please enter glucose value'
+            );
+
+        }
+
+        const entry = {
+            value,
+            time:
+                time ||
+                new Date().toISOString()
+        };
+
+        try {
+
+            await apiRequest(
+                `${API_URL}/glucose`,
+                {
+                    method: 'POST',
+
+                    headers: {
+                        'Content-Type':
+                            'application/json'
+                    },
+
+                    body:
+                        JSON.stringify({
+                            value: entry.value,
+                            timestamp: entry.time
+                        })
+                }
+            );
+
+        } catch (error) {
+
+            console.log(
+                'Using local storage mode'
+            );
+
+        }
+
+        let data =
+            JSON.parse(
+                getUserStorage(
+                    'glucose',
+                    '[]'
+                ) || '[]'
+            );
+
+        data.push(entry);
+
+        setUserStorage(
+            'glucose',
+            JSON.stringify(data)
+        );
+
+        loadGlucoseData();
+
+        updateStats();
+
+        document
+            .getElementById('glucoseValue')
+            .value = '';
+
+        document
+            .getElementById('glucoseTime')
+            .value = '';
+
+    }
+
+
+    async function addMeal() {
+
+        const name =
+            document
+            .getElementById(
+                'mealName'
+            ).value;
+
+        const calories =
+            document
+            .getElementById(
+                'mealCalories'
+            ).value;
+
+        const time =
+            document
+            .getElementById(
+                'mealTime'
+            ).value;
+
+        if (!name || !calories) {
+
+            return alert(
+                'Please enter meal details'
+            );
+
+        }
+
+        const entry = {
+            name,
+            calories,
+            time:
+                time ||
+                new Date().toISOString()
+        };
+
+        try {
+
+            await apiRequest(
+                `${API_URL}/meals`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: entry.name,
+                        calories: entry.calories,
+                        timestamp: entry.time
+                    })
+                }
+            );
+
+        } catch (error) {
+
+            console.log('Meal API unavailable; using local storage mode');
+
+        }
+
+        let data =
+            JSON.parse(
+                getUserStorage(
+                    'meals',
+                    '[]'
+                ) || '[]'
+            );
+
+        data.push(entry);
+
+        setUserStorage(
+            'meals',
+            JSON.stringify(data)
+        );
+
+        loadMealsData();
+
+        updateStats();
+
+        document
+            .getElementById('mealName')
+            .value = '';
+
+        document
+            .getElementById('mealCalories')
+            .value = '';
+
+        document
+            .getElementById('mealTime')
+            .value = '';
+
+    }
+
+
+    async function addExercise() {
+
+        const type =
+            document
+            .getElementById(
+                'exerciseType'
+            ).value;
+
+        const duration =
+            document
+            .getElementById(
+                'exerciseDuration'
+            ).value;
+
+        const time =
+            document
+            .getElementById(
+                'exerciseTime'
+            ).value;
+
+        if (!type || !duration) {
+
+            return alert(
+                'Please enter exercise details'
+            );
+
+        }
+
+        const entry = {
+            type,
+            duration,
+            time:
+                time ||
+                new Date().toISOString()
+        };
+
+        try {
+
+            await apiRequest(
+                `${API_URL}/exercise`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        exercise_type: entry.type,
+                        duration: entry.duration,
+                        timestamp: entry.time
+                    })
+                }
+            );
+
+        } catch (error) {
+
+            console.log('Exercise API unavailable; using local storage mode');
+
+        }
+
+        let data =
+            JSON.parse(
+                getUserStorage(
+                    'exercise',
+                    '[]'
+                ) || '[]'
+            );
+
+        data.push(entry);
+
+        setUserStorage(
+            'exercise',
+            JSON.stringify(data)
+        );
+
+        loadExerciseData();
+
+        updateStats();
+
+        document
+            .getElementById('exerciseType')
+            .value = '';
+
+        document
+            .getElementById('exerciseDuration')
+            .value = '';
+
+        document
+            .getElementById('exerciseTime')
+            .value = '';
+
+    }
+
+
+    async function addMedication() {
+
+        const name =
+            document
+            .getElementById(
+                'medName'
+            ).value;
+
+        const dose =
+            document
+            .getElementById(
+                'medDose'
+            ).value;
+
+        const time =
+            document
+            .getElementById(
+                'medTime'
+            ).value;
+
+        if (!name || !dose) {
+
+            return alert(
+                'Please enter medication details'
+            );
+
+        }
+
+        const entry = {
+            name,
+            dose,
+            time:
+                time ||
+                new Date().toISOString()
+        };
+
+        try {
+
+            await apiRequest(
+                `${API_URL}/medications`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: entry.name,
+                        dose: entry.dose,
+                        timestamp: entry.time
+                    })
+                }
+            );
+
+        } catch (error) {
+
+            console.log('Medication API unavailable; using local storage mode');
+
+        }
+
+        let data =
+            JSON.parse(
+                getUserStorage(
+                    'medications',
+                    '[]'
+                ) || '[]'
+            );
+
+        data.push(entry);
+
+        setUserStorage(
+            'medications',
+            JSON.stringify(data)
+        );
+
+        loadMedicationsData();
+
+        updateStats();
+
+        document
+            .getElementById('medName')
+            .value = '';
+
+        document
+            .getElementById('medDose')
+            .value = '';
+
+        document
+            .getElementById('medTime')
+            .value = '';
+
+    }
+
+
+    /* ==============================
+       LOAD DATA
+    ============================== */
+
+    function loadAllData() {
+
+        loadGlucoseData();
+
+        loadMealsData();
+
+        loadExerciseData();
+
+        loadMedicationsData();
+
+        updateStats();
+
+        analyzeReport();
+
+    }
+
+
+    function loadGlucoseData() {
+
+        const data =
+            JSON.parse(
+                getUserStorage(
+                    'glucose',
+                    '[]'
+                ) || '[]'
+            );
+
+        const tbody =
+            document.getElementById(
+                'glucoseTable'
+            );
+
+        tbody.innerHTML =
+            data.map(
+                (item, idx) => `
+
+                <tr>
+
+                    <td>
+                        ${formatRecordTime(item.time)}
+                    </td>
+
+                    <td>
+                        ${item.value}
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="delete-btn"
+                            onclick="deleteGlucose(${idx})"
+                        >
+                            Delete
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `
+            ).join('');
+
+    }
+
+
+    function loadMealsData() {
+
+        const data =
+            JSON.parse(
+                getUserStorage(
+                    'meals',
+                    '[]'
+                ) || '[]'
+            );
+
+        const tbody =
+            document.getElementById(
+                'mealsTable'
+            );
+
+        tbody.innerHTML =
+            data.map(
+                (item, idx) => `
+
+                <tr>
+
+                    <td>
+                        ${formatRecordTime(item.time)}
+                    </td>
+
+                    <td>
+                        ${item.name}
+                    </td>
+
+                    <td>
+                        ${item.calories}
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="delete-btn"
+                            onclick="deleteMeal(${idx})"
+                        >
+                            Delete
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `
+            ).join('');
+
+    }
+
+
+    function loadExerciseData() {
+
+        const data =
+            JSON.parse(
+                getUserStorage(
+                    'exercise',
+                    '[]'
+                ) || '[]'
+            );
+
+        const tbody =
+            document.getElementById(
+                'exerciseTable'
+            );
+
+        tbody.innerHTML =
+            data.map(
+                (item, idx) => `
+
+                <tr>
+
+                    <td>
+                        ${formatRecordTime(item.time)}
+                    </td>
+
+                    <td>
+                        ${item.type}
+                    </td>
+
+                    <td>
+                        ${item.duration}
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="delete-btn"
+                            onclick="deleteExercise(${idx})"
+                        >
+                            Delete
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `
+            ).join('');
+
+    }
+
+
+    function loadMedicationsData() {
+
+        const data =
+            JSON.parse(
+                getUserStorage(
+                    'medications',
+                    '[]'
+                ) || '[]'
+            );
+
+        const tbody =
+            document.getElementById(
+                'medicationsTable'
+            );
+
+        tbody.innerHTML =
+            data.map(
+                (item, idx) => `
+
+                <tr>
+
+                    <td>
+                        ${formatRecordTime(item.time)}
+                    </td>
+
+                    <td>
+                        ${item.name}
+                    </td>
+
+                    <td>
+                        ${item.dose}
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="delete-btn"
+                            onclick="deleteMedication(${idx})"
+                        >
+                            Delete
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `
+            ).join('');
+
+    }
+
+
+    /* ==============================
+       DELETE
+    ============================== */
+
+    function deleteGlucose(idx) {
+
+        let data =
+            JSON.parse(
+                getUserStorage(
+                    'glucose',
+                    '[]'
+                ) || '[]'
+            );
+
+        data.splice(idx, 1);
+
+        setUserStorage(
+            'glucose',
+            JSON.stringify(data)
+        );
+
+        loadGlucoseData();
+
+        updateStats();
+
+    }
+
+
+    function deleteMeal(idx) {
+
+        let data =
+            JSON.parse(
+                getUserStorage(
+                    'meals',
+                    '[]'
+                ) || '[]'
+            );
+
+        data.splice(idx, 1);
+
+        setUserStorage(
+            'meals',
+            JSON.stringify(data)
+        );
+
+        loadMealsData();
+
+        updateStats();
+
+    }
+
+
+    function deleteExercise(idx) {
+
+        let data =
+            JSON.parse(
+                getUserStorage(
+                    'exercise',
+                    '[]'
+                ) || '[]'
+            );
+
+        data.splice(idx, 1);
+
+        setUserStorage(
+            'exercise',
+            JSON.stringify(data)
+        );
+
+        loadExerciseData();
+
+        updateStats();
+
+    }
+
+
+    function deleteMedication(idx) {
+
+        let data =
+            JSON.parse(
+                getUserStorage(
+                    'medications',
+                    '[]'
+                ) || '[]'
+            );
+
+        data.splice(idx, 1);
+
+        setUserStorage(
+            'medications',
+            JSON.stringify(data)
+        );
+
+        loadMedicationsData();
+
+        updateStats();
+
+    }
+
+
+    /* ==============================
+       STATISTICS
+    ============================== */
+
+    function getStoredRecords(key) {
+
+        try {
+
+            const records = JSON.parse(
+                getUserStorage(key, '[]')
+            );
+
+            return Array.isArray(records) ? records : [];
+
+        } catch (error) {
+
+            return [];
+
+        }
+
+    }
+
+
+    function escapeHtml(value) {
+
+        return String(value)
+            .replaceAll('&', '&amp;')
+            .replaceAll('<', '&lt;')
+            .replaceAll('>', '&gt;')
+            .replaceAll('"', '&quot;')
+            .replaceAll("'", '&#039;');
+
+    }
+
+
+    // Prevent JavaScript from turning null/empty timestamps into 1/1/1970.
+    // Reports that do not provide an exact time are shown as "Not specified".
+    function formatRecordTime(value) {
+        if (!value) return 'Not specified';
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return 'Not specified';
+        return date.toLocaleString();
+    }
+
+
+    async function analyzeUploadedReport() {
+
+        const fileInput = document.getElementById('reportFile');
+        const status = document.getElementById('uploadStatus');
+        const file = fileInput.files[0];
+
+        if (!file) {
+            showErrorMessage(status, 'Please choose a PDF report first.');
+            return;
+        }
+
+        if (file.size > 10 * 1024 * 1024) {
+            showErrorMessage(status, 'The PDF must be smaller than 10 MB.');
+            return;
+        }
+
+        status.textContent = 'Uploading and analyzing the PDF...';
+        status.style.color = '';
+
+        const formData = new FormData();
+        formData.append('report', file);
+
+        try {
+            const response = await apiRequest(
+                `${API_URL}/reports/analyze`,
+                {
+                    method: 'POST',
+                    body: formData
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'PDF analysis failed');
+            }
+
+            status.textContent = 'PDF analyzed successfully. Dashboard data was filled from the report.';
+            status.style.color = '#a7f3d0';
+
+            // Save the complete universal extraction result.
+            const reportDate = data.report_date || data.report?.report_date || new Date().toISOString();
+            setUserStorage('latestReportData', JSON.stringify(data));
+
+            // Replace, rather than merge, dashboard blocks so an older PDF cannot
+            // leave stale meals/exercise/medications visible when the new PDF
+            // does not contain those sections.
+            setUserStorage('glucose', JSON.stringify(data.glucose || []));
+            setUserStorage('meals', JSON.stringify(data.meals || []));
+            setUserStorage('exercise', JSON.stringify(data.exercise || []));
+            setUserStorage('medications', JSON.stringify(data.medications || []));
+
+            loadAllData();
+
+            const patient = data.patient || {};
+            const extraction = data.extraction || {};
+            const warnings = extraction.warnings || [];
+            const findings = data.findings || [];
+            document.getElementById('reportOutput').innerHTML = `
+                <div class="report-document">
+                    <h3>${escapeHtml(data.report?.filename || data.filename || 'Uploaded PDF')}</h3>
+                    <p class="report-note">
+                        ${data.pages || data.report?.pages || 0} page${(data.pages || data.report?.pages || 0) === 1 ? '' : 's'} |
+                        ${data.characters || 0} readable characters
+                    </p>
+                    <p class="report-note">
+                        <strong>Patient:</strong> ${escapeHtml(patient.name || 'Not detected')}
+                        ${patient.patient_id ? ` | <strong>ID:</strong> ${escapeHtml(patient.patient_id)}` : ''}
+                        ${patient.age ? ` | <strong>Age:</strong> ${escapeHtml(patient.age)}` : ''}
+                        ${patient.gender ? ` | <strong>Gender:</strong> ${escapeHtml(patient.gender)}` : ''}
+                    </p>
+                    <p class="report-note">
+                        Extracted: ${extraction.glucose_entries || 0} glucose,
+                        ${extraction.meal_entries || 0} meals,
+                        ${extraction.exercise_entries || 0} exercise,
+                        ${extraction.medication_entries || 0} medications,
+                        ${extraction.lab_entries || 0} other lab results.
+                    </p>
+                    ${findings.length ? `<ul class="report-findings">${findings.map((finding) => `<li>${escapeHtml(finding)}</li>`).join('')}</ul>` : ''}
+                    ${warnings.length ? `<div class="report-note"><strong>Warnings:</strong><ul>${warnings.map((warning) => `<li>${escapeHtml(warning)}</li>`).join('')}</ul></div>` : ''}
+                    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;">
+                        <button type="button" class="secondary-btn" onclick="downloadLatestReportJson()">Download Universal JSON</button>
+                        <button type="button" class="secondary-btn" onclick="showLatestReportJson()">View Universal JSON</button>
+                    </div>
+                    <p class="report-note">
+                        Dashboard data was populated from the uploaded PDF. For scanned/image-only PDFs,
+                        OCR may be required. Please verify extracted information with the patient's healthcare professional.
+                    </p>
+                    <pre id="universalJsonPreview" style="display:none;max-height:360px;overflow:auto;white-space:pre-wrap;text-align:left;margin-top:12px;"></pre>
+                </div>
+            `;
+
+        } catch (error) {
+            showErrorMessage(status, error.message);
+        }
+    }
+
+    function downloadLatestReportJson() {
+
+        const raw = getUserStorage('latestReportData');
+        if (!raw) {
+            alert('No analyzed report is available yet.');
+            return;
+        }
+
+        const blob = new Blob([JSON.stringify(JSON.parse(raw), null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        const report = JSON.parse(raw);
+        const filename = (report.report?.filename || report.filename || 'medical_report').replace(/[^a-z0-9._-]+/gi, '_');
+        link.download = `${filename.replace(/\.pdf$/i, '')}_universal.json`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+
+    }
+
+
+    function showLatestReportJson() {
+
+        const preview = document.getElementById('universalJsonPreview');
+        const raw = getUserStorage('latestReportData');
+        if (!preview || !raw) {
+            return;
+        }
+
+        preview.style.display = preview.style.display === 'none' ? 'block' : 'none';
+        if (preview.style.display === 'block') {
+            preview.textContent = JSON.stringify(JSON.parse(raw), null, 2);
+        }
+
+    }
+
+
+    function showErrorMessage(element, message) {
+
+        element.textContent = message;
+        element.style.color = '#fecaca';
+
+    }
+
+
+    function analyzeReport() {
+
+        const startValue = document
+            .getElementById('reportStartDate')
+            .value;
+
+        const endValue = document
+            .getElementById('reportEndDate')
+            .value;
+
+        const startDate = startValue
+            ? new Date(`${startValue}T00:00:00`)
+            : null;
+
+        const endDate = endValue
+            ? new Date(`${endValue}T23:59:59.999`)
+            : null;
+
+        if (startDate && endDate && startDate > endDate) {
+
+            document.getElementById('reportOutput').innerHTML =
+                '<p class="report-empty">The start date must be before the end date.</p>';
+
+            return;
+
+        }
+
+        const filterRecords = (records) => records.filter((record) => {
+
+            const timestamp = new Date(record.time);
+
+            if (Number.isNaN(timestamp.getTime())) {
+                return false;
+            }
+
+            return (!startDate || timestamp >= startDate) &&
+                (!endDate || timestamp <= endDate);
+
+        });
+
+        const glucose = filterRecords(
+            getStoredRecords('glucose')
+        ).map((record) => ({
+            value: Number(record.value),
+            time: new Date(record.time)
+        })).filter((record) => Number.isFinite(record.value))
+            .sort((left, right) => left.time - right.time);
+
+        const meals = filterRecords(
+            getStoredRecords('meals')
+        );
+
+        const exercise = filterRecords(
+            getStoredRecords('exercise')
+        );
+
+        const medications = filterRecords(
+            getStoredRecords('medications')
+        );
+
+        const output = document.getElementById('reportOutput');
+
+        if (!glucose.length && !meals.length && !exercise.length && !medications.length) {
+
+            output.innerHTML =
+                '<p class="report-empty">No records were found for this date range.</p>';
+
+            return;
+
+        }
+
+        const glucoseValues = glucose.map((record) => record.value);
+        const average = glucoseValues.length
+            ? glucoseValues.reduce((sum, value) => sum + value, 0) / glucoseValues.length
+            : null;
+        const minimum = glucoseValues.length ? Math.min(...glucoseValues) : null;
+        const maximum = glucoseValues.length ? Math.max(...glucoseValues) : null;
+        const inRange = glucoseValues.filter((value) => value >= 70 && value <= 180).length;
+        const lowReadings = glucoseValues.filter((value) => value < 70).length;
+        const highReadings = glucoseValues.filter((value) => value > 180).length;
+        const exerciseMinutes = exercise.reduce(
+            (sum, record) => sum + (Number(record.duration) || 0),
+            0
+        );
+        const calories = meals.reduce(
+            (sum, record) => sum + (Number(record.calories) || 0),
+            0
+        );
+        const firstValue = glucose[0]?.value;
+        const lastValue = glucose[glucose.length - 1]?.value;
+        const trend = glucose.length > 1
+            ? lastValue - firstValue
+            : null;
+        const findings = [];
+
+        if (!glucose.length) {
+            findings.push('Add blood glucose readings to identify glucose patterns.');
+        } else {
+            findings.push(`${inRange} of ${glucose.length} glucose readings were between 70 and 180 mg/dL.`);
+
+            if (lowReadings) {
+                findings.push(`${lowReadings} reading${lowReadings === 1 ? '' : 's'} were below 70 mg/dL.`);
+            }
+
+            if (highReadings) {
+                findings.push(`${highReadings} reading${highReadings === 1 ? '' : 's'} were above 180 mg/dL.`);
+            }
+
+            if (trend !== null) {
+                const direction = trend > 0 ? 'increased' : trend < 0 ? 'decreased' : 'stayed level';
+                findings.push(`The latest reading ${direction} by ${Math.abs(trend).toFixed(1)} mg/dL compared with the earliest reading.`);
+            }
+        }
+
+        if (exerciseMinutes) {
+            findings.push(`You logged ${exerciseMinutes.toFixed(0)} minutes of exercise across ${exercise.length} session${exercise.length === 1 ? '' : 's'}.`);
+        }
+
+        if (!medications.length) {
+            findings.push('No medication records were logged in this period.');
+        }
+
+        const rangeLabel = startValue || endValue
+            ? `${startValue || 'Beginning'} to ${endValue || 'Today'}`
+            : 'All available records';
+
+        output.innerHTML = `
+            <p class="report-note">Period: ${rangeLabel}</p>
+            <div class="report-summary">
+                <div class="report-metric"><strong>${average === null ? '--' : average.toFixed(1)}</strong><span>Average glucose (mg/dL)</span></div>
+                <div class="report-metric"><strong>${minimum === null ? '--' : minimum.toFixed(1)} / ${maximum === null ? '--' : maximum.toFixed(1)}</strong><span>Lowest / highest glucose</span></div>
+                <div class="report-metric"><strong>${glucose.length}</strong><span>Glucose readings</span></div>
+                <div class="report-metric"><strong>${exerciseMinutes.toFixed(0)} min</strong><span>Exercise logged</span></div>
+                <div class="report-metric"><strong>${meals.length}</strong><span>Meals (${calories.toFixed(0)} calories)</span></div>
+                <div class="report-metric"><strong>${medications.length}</strong><span>Medication entries</span></div>
+            </div>
+            <ul class="report-findings">${findings.map((finding) => `<li>${finding}</li>`).join('')}</ul>
+        `;
+
+    }
+
+    function updateStats() {
+
+        const glucose = getStoredRecords('glucose');
+
+        const meals = getStoredRecords('meals');
+
+        const exercise = getStoredRecords('exercise');
+
+        const meds = getStoredRecords('medications');
+
+        const avgGlucose =
+            glucose.length > 0
+            ?
+            (
+                glucose.reduce(
+                    (sum, g) =>
+                        sum +
+                        parseInt(
+                            g.value
+                        ),
+                    0
+                )
+                /
+                glucose.length
+            ).toFixed(1)
+            :
+            '--';
+
+        document
+            .getElementById(
+                'avgGlucose'
+            )
+            .textContent =
+                avgGlucose;
+
+        document
+            .getElementById(
+                'totalMeals'
+            )
+            .textContent =
+                meals.length;
+
+        document
+            .getElementById(
+                'totalExercise'
+            )
+            .textContent =
+                exercise.length;
+
+        document
+            .getElementById(
+                'totalMeds'
+            )
+            .textContent =
+                meds.length;
+
+        analyzeReport();
+
+    }
+
+
+    /* ==============================
+       ERROR / SUCCESS
+    ============================== */
+
+    function showError(
+        elementId,
+        message
+    ) {
+
+        const el =
+            document.getElementById(
+                elementId
+            );
+
+        el.textContent =
+            message;
+
+        el.classList
+            .remove('hide');
+
+    }
+
+
+    function showSuccess(
+        elementId,
+        message
+    ) {
+
+        const el =
+            document.getElementById(
+                elementId
+            );
+
+        el.textContent =
+            message;
+
+        el.classList
+            .remove('hide');
+
+    }
+
+
+    /* ==============================
+       AUTO LOCK
+    ============================== */
+
+    function resetActivityTimer() {
+
+        clearTimeout(
+            inactivityTimeout
+        );
+
+        clearTimeout(
+            warningTimeout
+        );
+
+        clearInterval(
+            activityCountdownInterval
+        );
+
+        activityDeadline =
+            Date.now() +
+            INACTIVITY_TIME;
+
+        inactivityTimeout =
+            setTimeout(
+                () => {
+
+                    lockSession();
+
+                },
+                INACTIVITY_TIME
+            );
+
+        updateActivityTimer();
+
+        activityCountdownInterval =
+            setInterval(
+                () => updateActivityTimer(),
+                1000
+            );
+
+    }
+
+
+    function updateActivityTimer() {
+
+        const timerEl =
+            document.getElementById(
+                'activityTimer'
+            );
+
+        const remainingMilliseconds =
+            Math.max(
+                0,
+                activityDeadline - Date.now()
+            );
+
+        const remaining =
+            Math.ceil(
+                remainingMilliseconds / 1000
+            );
+
+        timerEl.textContent =
+            `⏱️ Auto-lock in ${
+                Math.floor(
+                    remaining / 60
+                )
+            }:${
+                String(
+                    remaining % 60
+                ).padStart(2, '0')
+            }`;
+
+        if (
+            remainingMilliseconds <=
+            INACTIVITY_TIME - WARNING_TIME
+        ) {
+
+            timerEl.classList
+                    .add('warning');
+
+        } else {
+
+            timerEl.classList
+                .remove('warning');
+
+        }
+
+    }
+
+
+    function lockSession() {
+
+        sessionLocked = true;
+
+        document
+            .getElementById(
+                'lockOverlay'
+            )
+            .style
+            .display = 'flex';
+
+        clearTimeout(
+            inactivityTimeout
+        );
+
+        clearTimeout(
+            warningTimeout
+        );
+
+        clearInterval(
+            activityCountdownInterval
+        );
+
+        activityCountdownInterval = null;
+
+        activityDeadline = null;
+
+        document
+            .getElementById(
+                'activityTimer'
+            )
+            .textContent = '🔒 Session locked';
+
+    }
+
+
+    async function unlockSession() {
+
+        const password =
+            document
+            .getElementById(
+                'unlockPassword'
+            ).value;
+
+        if (!password) {
+
+            showError(
+                'unlockError',
+                'Please enter your password'
+            );
+            return;
+
+        }
+
+        try {
+
+            const response = await apiRequest(
+                `${API_URL}/unlock`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ password })
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+
+                showError(
+                    'unlockError',
+                    data.message || 'Unable to unlock session'
+                );
+                return;
+
+            }
+
+            sessionLocked = false;
+
+            document
+                .getElementById(
+                    'lockOverlay'
+                )
+                .style
+                .display = 'none';
+
+            document
+                .getElementById(
+                    'unlockPassword'
+                )
+                .value = '';
+
+            document
+                .getElementById(
+                    'unlockError'
+                )
+                .classList
+                .add('hide');
+
+            resetActivityTimer();
+
+        } catch (error) {
+
+            console.error('Unlock API failed:', error);
+
+            showError(
+                'unlockError',
+                'Unable to connect to the server. Please try again.'
+            );
+
+        }
+
+    }
+
+
+    /* ==============================
+       ACTIVITY DETECTION
+    ============================== */
+
+    document.addEventListener(
+        'mousedown',
+        () => {
+
+            if (currentUser && !sessionLocked) {
+                resetActivityTimer();
+            }
+
+        }
+    );
+
+    document.addEventListener(
+        'keydown',
+        () => {
+
+            if (currentUser && !sessionLocked) {
+                resetActivityTimer();
+            }
+
+        }
+    );
+
+    document.addEventListener(
+        'touchstart',
+        () => {
+
+            if (currentUser && !sessionLocked) {
+                resetActivityTimer();
+            }
+
+        }
+    );
+
+
+    function clearActivityTimer() {
+
+        clearTimeout(
+            inactivityTimeout
+        );
+
+        clearTimeout(
+            warningTimeout
+        );
+
+        clearInterval(
+            activityCountdownInterval
+        );
+
+        activityCountdownInterval = null;
+
+        activityDeadline = null;
+
+        document
+            .getElementById(
+                'activityTimer'
+            )
+            .textContent = '';
+
+    }
+
+</script>
+
+</body>
+</html>
