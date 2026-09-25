@@ -1,0 +1,14 @@
+{
+  "builds": [
+    {
+      "src": "diabetes_tracker_backend.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "diabetes_tracker_backend.py"
+    }
+  ]
+}
